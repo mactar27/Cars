@@ -12,7 +12,9 @@ const pool = mysql.createPool({
   connectionLimit:    10,
   queueLimit:         0,
   charset:            "utf8mb4",
-  ssl: process.env.DATABASE_SSL === "true" ? { minVersion: "TLSv1.2", rejectUnauthorized: true } : undefined,
+  ssl: process.env.DATABASE_HOST?.includes("localhost") || process.env.DATABASE_HOST?.includes("127.0.0.1")
+    ? undefined
+    : { minVersion: "TLSv1.2", rejectUnauthorized: false },
 })
 
 export default pool
