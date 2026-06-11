@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Check, CalendarIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { formatEUR, formatKm } from "@/lib/format"
@@ -12,6 +13,7 @@ import "react-day-picker/dist/style.css"
 export function BookingPanel({ vehicle }: { vehicle: Vehicle }) {
   const hasRental = vehicle.services.includes("location") && vehicle.rental
   const hasSale = vehicle.services.includes("vente") && vehicle.sale
+  const router = useRouter()
 
   const [mode, setMode] = useState<"location" | "vente">(
     hasRental ? "location" : "vente",
@@ -47,6 +49,11 @@ export function BookingPanel({ vehicle }: { vehicle: Vehicle }) {
         }),
       })
 
+      if (res.status === 401) {
+        router.push(`/connexion?redirect=/vehicules/${vehicle.slug}`)
+        return
+      }
+
       const data = await res.json()
       if (!res.ok) {
         setError(data.error || "Une erreur est survenue.")
@@ -60,6 +67,7 @@ export function BookingPanel({ vehicle }: { vehicle: Vehicle }) {
       setLoading(false)
     }
   }
+
 
   return (
     <div className="rounded-2xl border border-border bg-card p-6 lg:sticky lg:top-24">
