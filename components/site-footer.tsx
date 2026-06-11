@@ -38,7 +38,7 @@ export function SiteFooter() {
               title="Maison"
               items={[
                 { href: "/", label: "À propos" },
-                { href: "/", label: "Contact" },
+                { href: "/contact", label: "Contact" },
                 { href: "/", label: "Mentions légales" },
               ]}
             />
