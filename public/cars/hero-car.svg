@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <g transform="translate(150,150)">
+    <!-- Ground shadow -->
+    <ellipse cx="650" cy="540" rx="620" ry="35" fill="#f0f0f0"/>
+    <!-- Body lower -->
+    <path d="M60,430 Q80,320 200,270 Q350,230 650,220 Q950,230 1100,270 Q1220,320 1240,430 Z" fill="#e8e8e8"/>
+    <path d="M60,430 Q80,320 200,270 Q350,225 650,215 Q950,225 1100,270 Q1220,320 1240,430 L1240,460 L60,460 Z" fill="#d0d0d0"/>
+    <!-- Roof -->
+    <path d="M320,430 Q350,300 430,255 Q520,220 650,215 Q780,220 870,255 Q950,300 980,430 Z" fill="#c8c8c8"/>
+    <!-- Windows -->
+    <path d="M340,425 Q365,310 440,268 Q515,235 640,232 L640,425 Z" fill="#a8d4e8" opacity="0.5"/>
+    <path x="660" d="M660,232 Q785,235 860,268 Q935,310 960,425 L660,425 Z" fill="#a8d4e8" opacity="0.5"/>
+    <!-- Wheels -->
+    <circle cx="250" cy="460" r="88" fill="#1a1a1a"/>
+    <circle cx="250" cy="460" r="62" fill="#999"/>
+    <circle cx="250" cy="460" r="28" fill="#555"/>
+    <circle cx="1050" cy="460" r="88" fill="#1a1a1a"/>
+    <circle cx="1050" cy="460" r="62" fill="#999"/>
+    <circle cx="1050" cy="460" r="28" fill="#555"/>
+    <!-- Front lights -->
+    <path d="M62,380 Q72,358 108,365 L108,408 Q72,415 62,395 Z" fill="#FFF9C4" opacity="0.9"/>
+    <path d="M1238,380 Q1228,358 1192,365 L1192,408 Q1228,415 1238,395 Z" fill="#FF6B6B" opacity="0.7"/>
+  </g>
+  <text x="800" y="820" text-anchor="middle" font-family="Inter, sans-serif" font-size="22" fill="#ccc" letter-spacing="8">MAISON AUTO — PREMIUM VEHICLES</text>
+</svg>
