@@ -24,6 +24,9 @@ export function BookingPanel({ vehicle }: { vehicle: Vehicle }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
   const days = dateRange.from && dateRange.to ? differenceInDays(dateRange.to, dateRange.from) + 1 : 0
   const rentalTotal = vehicle.rental && days > 0 ? vehicle.rental.pricePerDay * days : 0
 
@@ -33,6 +36,11 @@ export function BookingPanel({ vehicle }: { vehicle: Vehicle }) {
     
     if (mode === "location" && (!dateRange.from || !dateRange.to)) {
       setError("Veuillez sélectionner des dates de location.")
+      return
+    }
+
+    if (mode === "location" && dateRange.from && dateRange.from < today) {
+      setError("La date de début doit être aujourd'hui ou dans le futur.")
       return
     }
 
@@ -157,7 +165,7 @@ export function BookingPanel({ vehicle }: { vehicle: Vehicle }) {
                   onSelect={(range) => {
                     setDateRange(range || {})
                   }}
-                  disabled={{ before: new Date() }}
+                  disabled={{ before: today }}
                   className="!m-0"
                   classNames={{
                     day_selected: "bg-foreground text-background hover:bg-foreground/90",
