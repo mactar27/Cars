@@ -4,6 +4,8 @@ import { SiteFooter } from "@/components/site-footer"
 import { CatalogClient } from "@/components/catalog-client"
 import { getAllBrands } from "@/lib/data"
 
+export const dynamic = "force-dynamic"
+
 export const metadata = {
   title: "Catalogue — MAISON AUTO",
   description: "Parcourez notre sélection de véhicules en vente et en location.",
