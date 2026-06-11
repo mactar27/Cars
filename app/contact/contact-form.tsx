@@ -8,17 +8,17 @@ const infos = [
   {
     icon: MapPin,
     label: "Adresse",
-    value: "12 Avenue des Champs-Élysées\n75008 Paris, France",
+    value: "Rufisque Bargny\nDakar, Sénégal",
   },
   {
     icon: Phone,
     label: "Téléphone",
-    value: "+33 1 23 45 67 89",
+    value: "+221 77 351 91 28",
   },
   {
     icon: Mail,
     label: "Email",
-    value: "contact@maisonauto.fr",
+    value: "contact@maisonauto.sn",
   },
   {
     icon: Clock,
@@ -91,14 +91,22 @@ export function ContactForm() {
             ))}
           </ul>
 
-          <div className="flex h-56 items-center justify-center overflow-hidden rounded-2xl border border-border bg-muted/40">
+          <a
+            href="https://www.google.com/maps?q=14.735108,-17.289063"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-56 items-center justify-center overflow-hidden rounded-2xl border border-border bg-muted/40 transition-colors hover:bg-muted/60"
+          >
             <div className="text-center">
               <MapPin className="mx-auto size-8 text-muted-foreground/40" />
-              <p className="mt-2 text-xs text-muted-foreground">
-                12 Av. des Champs-Élysées, Paris
+              <p className="mt-2 text-xs font-medium text-muted-foreground">
+                Rufisque Bargny, Dakar
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground/60">
+                Voir sur Google Maps ↗
               </p>
             </div>
-          </div>
+          </a>
         </motion.div>
 
         {/* Right — Formulaire */}
@@ -157,7 +165,7 @@ export function ContactForm() {
                       required
                       value={form.name}
                       onChange={handleChange}
-                      placeholder="Jean Dupont"
+                      placeholder="Votre nom"
                       className="auth-input"
                     />
                   </div>
@@ -175,7 +183,7 @@ export function ContactForm() {
                       required
                       value={form.email}
                       onChange={handleChange}
-                      placeholder="jean@exemple.fr"
+                      placeholder="votre@email.sn"
                       className="auth-input"
                     />
                   </div>
@@ -195,7 +203,7 @@ export function ContactForm() {
                       type="tel"
                       value={form.phone}
                       onChange={handleChange}
-                      placeholder="+33 6 00 00 00 00"
+                      placeholder="+221 77 000 00 00"
                       className="auth-input"
                     />
                   </div>
