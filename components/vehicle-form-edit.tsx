@@ -35,6 +35,7 @@ export function VehicleFormEdit({ vehicle }: { vehicle: VehicleData }) {
 
   const initialServices = vehicle.services ? vehicle.services.split(",") : []
   const [services, setServices] = useState<string[]>(initialServices)
+  const [available, setAvailable] = useState<boolean>(vehicle.available === 1)
 
   const [imageUrl, setImageUrl] = useState<string | null>(vehicle.image ?? null)
   const [imageUploading, setImageUploading] = useState(false)
@@ -82,7 +83,7 @@ export function VehicleFormEdit({ vehicle }: { vehicle: VehicleData }) {
       rental: services.includes("location") ? {
         pricePerDay: Number(formData.get("pricePerDay")),
         includedKm: Number(formData.get("includedKm")),
-        available: true,
+        available,
       } : undefined,
       sale: services.includes("vente") ? {
         price: Number(formData.get("price")),
@@ -205,12 +206,31 @@ export function VehicleFormEdit({ vehicle }: { vehicle: VehicleData }) {
         <div className="space-y-4 border-t border-border pt-6">
           <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Détails Location</p>
           <div className="grid gap-6 md:grid-cols-2">
-            <Field label="Prix par jour (€)">
+            <Field label="Prix par jour (F CFA)">
               <input type="number" name="pricePerDay" defaultValue={vehicle.price_per_day ?? ""} required className="w-full rounded-md border border-border bg-background p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-foreground/20" />
             </Field>
             <Field label="Km inclus / jour">
               <input type="number" name="includedKm" defaultValue={vehicle.included_km ?? 200} required className="w-full rounded-md border border-border bg-background p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-foreground/20" />
             </Field>
+          </div>
+          <div className="mt-4">
+            <label className="flex cursor-pointer items-center gap-3">
+              <div
+                onClick={() => setAvailable((v) => !v)}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  available ? "bg-foreground" : "bg-muted-foreground/30"
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
+                    available ? "translate-x-6" : "translate-x-1"
+                  }`}
+                />
+              </div>
+              <span className="text-sm font-medium text-foreground">
+                {available ? "Disponible à la location" : "Indisponible (location suspendue)"}
+              </span>
+            </label>
           </div>
         </div>
       )}
