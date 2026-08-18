@@ -41,7 +41,7 @@ export default async function EspaceAdminPage() {
   const annualRevenue = revenueResult[0]?.annual || 0
 
   const reservations = await query<any>(`
-    SELECT r.*, v.brand, v.model, u.email, u.first_name, u.last_name, u.address
+    SELECT r.*, v.brand, v.model, v.image as vehicle_image, u.email, u.first_name, u.last_name, u.address, u.phone
     FROM reservations r
     JOIN vehicules v ON v.id = r.vehicule_id
     JOIN users u ON u.id = r.user_id

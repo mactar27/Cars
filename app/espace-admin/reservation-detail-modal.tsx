@@ -18,6 +18,8 @@ type Reservation = {
   first_name: string | null
   last_name: string | null
   address: string | null
+  phone: string | null
+  vehicle_image: string | null
   created_at: string
 }
 
@@ -74,6 +76,7 @@ export function ReservationDetailModal({ reservation }: { reservation: Reservati
                 <div className="space-y-2 rounded-xl border border-border p-4">
                   <Row icon={User} label={[reservation.first_name, reservation.last_name].filter(Boolean).join(" ") || "—"} />
                   <Row icon={Mail} label={reservation.email} />
+                  {reservation.phone && <Row icon={Phone} label={reservation.phone} />}
                   {reservation.address && <Row icon={MapPin} label={reservation.address} />}
                 </div>
               </section>
@@ -82,6 +85,15 @@ export function ReservationDetailModal({ reservation }: { reservation: Reservati
               <section>
                 <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Commande</p>
                 <div className="space-y-2 rounded-xl border border-border p-4">
+                  {reservation.vehicle_image && (
+                    <div className="relative h-44 w-full overflow-hidden rounded-lg mb-3 border border-border bg-muted">
+                      <img
+                        src={reservation.vehicle_image}
+                        alt={`${reservation.brand} ${reservation.model}`}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  )}
                   <Row icon={Car} label={`${reservation.brand} ${reservation.model}`} />
                   <Row
                     icon={CreditCard}
