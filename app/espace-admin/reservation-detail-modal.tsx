@@ -50,9 +50,9 @@ export function ReservationDetailModal({ reservation }: { reservation: Reservati
           />
 
           {/* Modal */}
-          <div className="relative z-10 w-full max-w-lg rounded-2xl border border-border bg-background shadow-2xl">
+          <div className="relative z-10 w-full max-w-lg rounded-2xl border border-border bg-background shadow-2xl max-h-[90vh] overflow-y-auto">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-border px-6 py-4">
+            <div className="flex items-center justify-between border-b border-border px-6 py-4 sticky top-0 bg-background z-10">
               <h2 className="text-base font-semibold text-foreground">Détails de la réservation #{reservation.id}</h2>
               <button
                 onClick={() => setOpen(false)}

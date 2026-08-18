@@ -66,7 +66,7 @@ export default async function EspaceAdminPage() {
               className="inline-flex items-center gap-2 rounded-full border border-foreground/15 px-4 py-2 text-sm text-foreground transition-colors hover:bg-foreground hover:text-background"
             >
               <Home className="size-4" />
-              Accueil
+              <span className="hidden sm:inline">Accueil</span>
             </Link>
             <LogoutButton />
           </div>
@@ -74,7 +74,7 @@ export default async function EspaceAdminPage() {
       </header>
 
       <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-12">
-        <div className="flex items-end justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-foreground">
               Tableau de bord
@@ -83,13 +83,13 @@ export default async function EspaceAdminPage() {
               Vue d&apos;ensemble du parc et de l&apos;activité.
             </p>
           </div>
-          <Link href="/espace-admin/vehicule/nouveau" className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90">
+          <Link href="/espace-admin/vehicule/nouveau" className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90 self-start sm:self-auto">
             <Plus className="size-4" />
             Ajouter un véhicule
           </Link>
         </div>
 
-        <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-5">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <AdminStat icon={Car} label="Total Produits" value={`${vehicles.length}`} />
           <AdminStat icon={Package} label="Valeur Stock" value={formatEUR(stockValue)} />
           <AdminStat icon={ShoppingBag} label="Ventes" value={`${totalSales}`} />
@@ -106,53 +106,55 @@ export default async function EspaceAdminPage() {
               {vehicles.length} véhicules
             </span>
           </div>
-          <table className="w-full text-sm">
-            <thead className="bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">
-              <tr>
-                <th className="px-6 py-3 font-medium">Véhicule</th>
-                <th className="hidden px-6 py-3 font-medium md:table-cell">Catégorie</th>
-                <th className="px-6 py-3 font-medium">Services</th>
-                <th className="hidden px-6 py-3 font-medium sm:table-cell">Location /j</th>
-                <th className="px-6 py-3 text-right font-medium">Prix vente</th>
-                <th className="px-6 py-3 text-right font-medium">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {vehicles.map((v) => (
-                <tr key={v.id} className="transition-colors hover:bg-muted/30">
-                  <td className="px-6 py-4 font-medium text-foreground">
-                    {v.brand} {v.model}
-                  </td>
-                  <td className="hidden px-6 py-4 capitalize text-muted-foreground md:table-cell">
-                    {v.category}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-1.5">
-                      {v.services.includes("location") && (
-                        <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
-                          Loc.
-                        </span>
-                      )}
-                      {v.services.includes("vente") && (
-                        <span className="rounded-full bg-foreground px-2 py-0.5 text-xs text-background">
-                          Vente
-                        </span>
-                      )}
-                    </div>
-                  </td>
-                  <td className="hidden px-6 py-4 text-muted-foreground sm:table-cell">
-                    {v.rental ? formatEUR(v.rental.pricePerDay) : "—"}
-                  </td>
-                  <td className="px-6 py-4 text-right text-foreground">
-                    {v.sale ? formatEUR(v.sale.price) : "—"}
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <AdminActions type="vehicle" id={v.id} />
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[600px] text-sm">
+              <thead className="bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr>
+                  <th className="px-6 py-3 font-medium">Véhicule</th>
+                  <th className="hidden px-6 py-3 font-medium md:table-cell">Catégorie</th>
+                  <th className="px-6 py-3 font-medium">Services</th>
+                  <th className="hidden px-6 py-3 font-medium sm:table-cell">Location /j</th>
+                  <th className="px-6 py-3 text-right font-medium">Prix vente</th>
+                  <th className="px-6 py-3 text-right font-medium">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {vehicles.map((v) => (
+                  <tr key={v.id} className="transition-colors hover:bg-muted/30">
+                    <td className="px-6 py-4 font-medium text-foreground">
+                      {v.brand} {v.model}
+                    </td>
+                    <td className="hidden px-6 py-4 capitalize text-muted-foreground md:table-cell">
+                      {v.category}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-1.5">
+                        {v.services.includes("location") && (
+                          <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground">
+                            Loc.
+                          </span>
+                        )}
+                        {v.services.includes("vente") && (
+                          <span className="rounded-full bg-foreground px-2 py-0.5 text-xs text-background">
+                            Vente
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="hidden px-6 py-4 text-muted-foreground sm:table-cell">
+                      {v.rental ? formatEUR(v.rental.pricePerDay) : "—"}
+                    </td>
+                    <td className="px-6 py-4 text-right text-foreground">
+                      {v.sale ? formatEUR(v.sale.price) : "—"}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <AdminActions type="vehicle" id={v.id} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className="mt-12 overflow-hidden rounded-xl border border-border bg-background">
@@ -160,46 +162,48 @@ export default async function EspaceAdminPage() {
             <h2 className="text-base font-medium text-foreground">Demandes de Réservation</h2>
             <span className="text-sm text-muted-foreground">{reservations.length} demande(s)</span>
           </div>
-          <table className="w-full text-sm">
-            <thead className="bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">
-              <tr>
-                <th className="px-6 py-3 font-medium">Client</th>
-                <th className="px-6 py-3 font-medium">Véhicule</th>
-                <th className="px-6 py-3 font-medium">Service</th>
-                <th className="px-6 py-3 font-medium">Dates / Info</th>
-                <th className="px-6 py-3 font-medium">Statut</th>
-                <th className="px-6 py-3 text-right font-medium">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {reservations.map((r) => (
-                <tr key={r.id} className="transition-colors hover:bg-muted/30">
-                  <td className="px-6 py-4 font-medium">
-                    <ReservationDetailModal reservation={r} />
-                  </td>
-                  <td className="px-6 py-4 text-muted-foreground">{r.brand} {r.model}</td>
-                  <td className="px-6 py-4 capitalize text-muted-foreground">{r.service_type}</td>
-                  <td className="px-6 py-4 text-muted-foreground">
-                    {r.date_debut ? new Date(r.date_debut).toLocaleDateString() : "—"} 
-                    {r.date_fin ? " au " + new Date(r.date_fin).toLocaleDateString() : ""}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground uppercase tracking-wider">
-                      {r.statut.replace('_', ' ')}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <AdminActions type="reservation" id={r.id} currentStatus={r.statut} />
-                  </td>
-                </tr>
-              ))}
-              {reservations.length === 0 && (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[800px] text-sm">
+              <thead className="bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-muted-foreground">Aucune réservation.</td>
+                  <th className="px-6 py-3 font-medium">Client</th>
+                  <th className="px-6 py-3 font-medium">Véhicule</th>
+                  <th className="px-6 py-3 font-medium">Service</th>
+                  <th className="px-6 py-3 font-medium">Dates / Info</th>
+                  <th className="px-6 py-3 font-medium">Statut</th>
+                  <th className="px-6 py-3 text-right font-medium">Actions</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {reservations.map((r) => (
+                  <tr key={r.id} className="transition-colors hover:bg-muted/30">
+                    <td className="px-6 py-4 font-medium">
+                      <ReservationDetailModal reservation={r} />
+                    </td>
+                    <td className="px-6 py-4 text-muted-foreground">{r.brand} {r.model}</td>
+                    <td className="px-6 py-4 capitalize text-muted-foreground">{r.service_type}</td>
+                    <td className="px-6 py-4 text-muted-foreground">
+                      {r.date_debut ? new Date(r.date_debut).toLocaleDateString() : "—"} 
+                      {r.date_fin ? " au " + new Date(r.date_fin).toLocaleDateString() : ""}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="rounded-full border border-border px-2 py-0.5 text-xs text-muted-foreground uppercase tracking-wider">
+                        {r.statut.replace('_', ' ')}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <AdminActions type="reservation" id={r.id} currentStatus={r.statut} />
+                    </td>
+                  </tr>
+                ))}
+                {reservations.length === 0 && (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-8 text-center text-muted-foreground">Aucune réservation.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </main>
     </div>

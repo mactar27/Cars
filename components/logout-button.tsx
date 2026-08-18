@@ -18,7 +18,7 @@ export function LogoutButton() {
       className="inline-flex items-center gap-2 rounded-full border border-foreground/15 px-4 py-2 text-sm text-foreground transition-colors hover:bg-destructive hover:text-destructive-foreground hover:border-destructive"
     >
       <LogOut className="size-4" />
-      Déconnexion
+      <span className="hidden sm:inline">Déconnexion</span>
     </button>
   )
 }
