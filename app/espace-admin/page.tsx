@@ -60,6 +60,19 @@ export default async function EspaceAdminPage() {
               Admin
             </span>
           </div>
+
+          <nav className="hidden items-center gap-6 md:flex">
+            <Link href="#stats" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+              Stats
+            </Link>
+            <Link href="#vehicles" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+              Véhicules
+            </Link>
+            <Link href="#reservations" className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+              Réservations
+            </Link>
+          </nav>
+
           <div className="flex items-center gap-3">
             <Link
               href="/"
@@ -89,7 +102,7 @@ export default async function EspaceAdminPage() {
           </Link>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div id="stats" className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 scroll-mt-20">
           <AdminStat icon={Car} label="Total Produits" value={`${vehicles.length}`} />
           <AdminStat icon={Package} label="Valeur Stock" value={formatEUR(stockValue)} />
           <AdminStat icon={ShoppingBag} label="Ventes" value={`${totalSales}`} />
@@ -97,7 +110,7 @@ export default async function EspaceAdminPage() {
           <AdminStat icon={TrendingUp} label="Revenus (Année)" value={formatEUR(annualRevenue)} />
         </div>
 
-        <div className="mt-12 overflow-hidden rounded-xl border border-border bg-background">
+        <div id="vehicles" className="mt-12 overflow-hidden rounded-xl border border-border bg-background scroll-mt-20">
           <div className="flex items-center justify-between border-b border-border px-6 py-4">
             <h2 className="text-base font-medium text-foreground">
               Parc automobile
@@ -157,7 +170,7 @@ export default async function EspaceAdminPage() {
           </div>
         </div>
 
-        <div className="mt-12 overflow-hidden rounded-xl border border-border bg-background">
+        <div id="reservations" className="mt-12 overflow-hidden rounded-xl border border-border bg-background scroll-mt-20">
           <div className="flex items-center justify-between border-b border-border px-6 py-4">
             <h2 className="text-base font-medium text-foreground">Demandes de Réservation</h2>
             <span className="text-sm text-muted-foreground">{reservations.length} demande(s)</span>
