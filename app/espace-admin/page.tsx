@@ -141,23 +141,22 @@ export default async function EspaceAdminPage({
       {/* Main Container */}
       <div className="flex flex-1 flex-col md:pl-64">
         {/* Mobile Header / Navbar */}
-        <header className="sticky top-0 z-10 border-b border-border bg-background px-6 py-4 md:hidden flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Maison Auto" width={120} height={40} className="h-8 w-auto object-contain" />
-            <span className="rounded-full bg-foreground px-2 py-0.5 text-[10px] text-background font-semibold">
+        <header className="sticky top-0 z-10 border-b border-border bg-background px-6 py-4 md:hidden flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-2">
+            <Image src="/logo.png" alt="Maison Auto" width={110} height={35} className="h-8 w-auto object-contain" />
+            <span className="rounded-full bg-foreground px-2 py-0.5 text-[9px] text-background font-semibold uppercase tracking-wider">
               Admin
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <Link href="/espace-admin?tab=dashboard" title="Dashboard" className={`p-2 hover:text-foreground ${tab === "dashboard" ? "text-foreground" : "text-muted-foreground"}`}><TrendingUp className="size-4" /></Link>
-            <Link href="/espace-admin?tab=products" title="Produits" className={`p-2 hover:text-foreground ${tab === "products" ? "text-foreground" : "text-muted-foreground"}`}><Car className="size-4" /></Link>
-            <Link href="/espace-admin?tab=orders" title="Commandes" className={`p-2 hover:text-foreground ${tab === "orders" ? "text-foreground" : "text-muted-foreground"}`}><ShoppingBag className="size-4" /></Link>
-            <Link href="/espace-admin?tab=clients" title="Clients" className={`p-2 hover:text-foreground ${tab === "clients" ? "text-foreground" : "text-muted-foreground"}`}><Users className="size-4" /></Link>
+          <div className="flex items-center gap-3">
+            <Link href="/" title="Retour Accueil" className="text-muted-foreground hover:text-foreground">
+              <Home className="size-5" />
+            </Link>
             <LogoutButton />
           </div>
         </header>
 
-        <main className="w-full px-6 py-10">
+        <main className="w-full px-6 py-10 pb-28 md:pb-10">
           {/* TAB: DASHBOARD */}
           {tab === "dashboard" && (
             <div className="space-y-10">
@@ -468,6 +467,46 @@ export default async function EspaceAdminPage({
             </div>
           )}
         </main>
+
+        {/* Bottom Navigation - Mobile only */}
+        <nav className="fixed bottom-0 left-0 right-0 z-20 flex h-16 border-t border-border bg-background/95 backdrop-blur px-2 md:hidden items-center justify-around pb-safe shadow-lg">
+          <Link
+            href="/espace-admin?tab=dashboard"
+            className={`flex flex-col items-center justify-center flex-1 gap-1 text-[10px] font-medium transition-colors ${
+              tab === "dashboard" ? "text-foreground font-semibold" : "text-muted-foreground"
+            }`}
+          >
+            <TrendingUp className="size-5" />
+            <span>Dashboard</span>
+          </Link>
+          <Link
+            href="/espace-admin?tab=products"
+            className={`flex flex-col items-center justify-center flex-1 gap-1 text-[10px] font-medium transition-colors ${
+              tab === "products" ? "text-foreground font-semibold" : "text-muted-foreground"
+            }`}
+          >
+            <Car className="size-5" />
+            <span>Produits</span>
+          </Link>
+          <Link
+            href="/espace-admin?tab=orders"
+            className={`flex flex-col items-center justify-center flex-1 gap-1 text-[10px] font-medium transition-colors ${
+              tab === "orders" ? "text-foreground font-semibold" : "text-muted-foreground"
+            }`}
+          >
+            <ShoppingBag className="size-5" />
+            <span>Commandes</span>
+          </Link>
+          <Link
+            href="/espace-admin?tab=clients"
+            className={`flex flex-col items-center justify-center flex-1 gap-1 text-[10px] font-medium transition-colors ${
+              tab === "clients" ? "text-foreground font-semibold" : "text-muted-foreground"
+            }`}
+          >
+            <Users className="size-5" />
+            <span>Clients</span>
+          </Link>
+        </nav>
       </div>
     </div>
   )
