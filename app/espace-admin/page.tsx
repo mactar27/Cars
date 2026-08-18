@@ -141,22 +141,22 @@ export default async function EspaceAdminPage({
       {/* Main Container */}
       <div className="flex flex-1 flex-col md:pl-64">
         {/* Mobile Header / Navbar */}
-        <header className="sticky top-0 z-10 border-b border-border bg-background px-6 py-4 md:hidden flex items-center justify-between shadow-sm">
-          <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="Maison Auto" width={110} height={35} className="h-8 w-auto object-contain" />
-            <span className="rounded-full bg-foreground px-2 py-0.5 text-[9px] text-background font-semibold uppercase tracking-wider">
+        <header className="sticky top-0 z-10 border-b border-border bg-background px-4 py-3 md:hidden flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-2 shrink-0 min-w-0">
+            <img src="/logo.png" alt="Maison Auto" className="h-7 w-auto max-w-[110px] object-contain shrink-0" />
+            <span className="rounded-full bg-foreground px-2 py-0.5 text-[9px] text-background font-semibold uppercase tracking-wider shrink-0">
               Admin
             </span>
           </div>
-          <div className="flex items-center gap-3">
-            <Link href="/" title="Retour Accueil" className="text-muted-foreground hover:text-foreground">
+          <div className="flex items-center gap-2 shrink-0">
+            <Link href="/" title="Retour Accueil" className="p-2 text-muted-foreground hover:text-foreground shrink-0">
               <Home className="size-5" />
             </Link>
             <LogoutButton />
           </div>
         </header>
 
-        <main className="w-full px-6 py-10 pb-28 md:pb-10">
+        <main className="w-full px-4 py-8 pb-28 md:pb-10">
           {/* TAB: DASHBOARD */}
           {tab === "dashboard" && (
             <div className="space-y-10">
