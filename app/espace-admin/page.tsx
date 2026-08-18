@@ -7,6 +7,7 @@ import { formatEUR } from "@/lib/format"
 import { AdminActions } from "./admin-actions"
 import { ReservationDetailModal } from "./reservation-detail-modal"
 import { LogoutButton } from "@/components/logout-button"
+import { DeleteAllReservationsButton } from "./delete-all-button"
 
 export const metadata = {
   title: "Administration — MAISON AUTO",
@@ -317,13 +318,16 @@ export default async function EspaceAdminPage({
           {/* TAB: ORDERS */}
           {tab === "orders" && (
             <div className="space-y-6">
-              <div className="border-b border-border pb-6">
-                <h1 className="text-3xl font-bold tracking-tight text-foreground">
-                  Suivi des Commandes
-                </h1>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Gerez les demandes de réservation et les achats de vos clients.
-                </p>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between border-b border-border pb-6">
+                <div>
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground">
+                    Suivi des Commandes
+                  </h1>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    Gerez les demandes de réservation et les achats de vos clients.
+                  </p>
+                </div>
+                <DeleteAllReservationsButton />
               </div>
 
               {/* Demandes de Reservation Table */}

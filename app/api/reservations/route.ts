@@ -84,3 +84,20 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Erreur serveur." }, { status: 500 })
   }
 }
+
+// DELETE /api/reservations — Supprimer toutes les réservations (admin seulement)
+export async function DELETE(request: NextRequest) {
+  const payload = getToken(request)
+  if (!payload || payload.role !== "admin") {
+    return NextResponse.json({ error: "Non autorisé." }, { status: 403 })
+  }
+
+  try {
+    await execute("DELETE FROM reservations")
+    return NextResponse.json({ success: true })
+  } catch (err: any) {
+    console.error("[DELETE /api/reservations]", err)
+    return NextResponse.json({ error: err?.message || "Erreur serveur." }, { status: 500 })
+  }
+}
+
