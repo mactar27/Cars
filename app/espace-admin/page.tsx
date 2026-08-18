@@ -254,7 +254,8 @@ export default async function EspaceAdminPage({
                     {vehicles.length} véhicules
                   </span>
                 </div>
-                <div className="overflow-x-auto">
+                {/* Desktop view */}
+                <div className="hidden md:block overflow-x-auto">
                   <table className="w-full min-w-[600px] text-sm">
                     <thead className="bg-slate-50/30 text-left text-xs uppercase tracking-wider text-muted-foreground border-b border-border">
                       <tr>
@@ -310,6 +311,35 @@ export default async function EspaceAdminPage({
                     </tbody>
                   </table>
                 </div>
+
+                {/* Mobile view */}
+                <div className="block md:hidden divide-y divide-border">
+                  {vehicles.map((v) => (
+                    <div key={v.id} className="p-4 flex flex-col gap-3">
+                      <div className="flex items-center gap-3">
+                        <img src={v.image || "/cars/hero-car.svg"} alt="" className="h-12 w-20 rounded object-cover border border-border shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-semibold text-foreground truncate">{v.brand} {v.model}</h3>
+                          <span className="text-xs text-muted-foreground capitalize">{v.category}</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex gap-1">
+                          {v.services.includes("location") && (
+                            <span className="rounded bg-blue-50 text-blue-700 px-2 py-0.5 font-medium border border-blue-100">Loc. {v.rental ? formatEUR(v.rental.pricePerDay) : "—"}</span>
+                          )}
+                          {v.services.includes("vente") && (
+                            <span className="rounded bg-emerald-50 text-emerald-700 px-2 py-0.5 font-medium border border-emerald-100">Vente {v.sale ? formatEUR(v.sale.price) : "—"}</span>
+                          )}
+                        </div>
+                        <AdminActions type="vehicle" id={v.id} />
+                      </div>
+                    </div>
+                  ))}
+                  {vehicles.length === 0 && (
+                    <p className="p-4 text-center text-muted-foreground text-sm">Aucun véhicule.</p>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -337,7 +367,9 @@ export default async function EspaceAdminPage({
                     {reservations.length} demande(s)
                   </span>
                 </div>
-                <div className="overflow-x-auto">
+
+                {/* Desktop view */}
+                <div className="hidden md:block overflow-x-auto">
                   <table className="w-full min-w-[800px] text-sm">
                     <thead className="bg-slate-50/30 text-left text-xs uppercase tracking-wider text-muted-foreground border-b border-border">
                       <tr>
@@ -405,6 +437,64 @@ export default async function EspaceAdminPage({
                     </tbody>
                   </table>
                 </div>
+
+                {/* Mobile view */}
+                <div className="block md:hidden divide-y divide-border">
+                  {reservations.map((r) => {
+                    const badgeColors: Record<string, string> = {
+                      en_attente: "bg-amber-50 text-amber-700 border-amber-200",
+                      confirmee: "bg-green-50 text-green-700 border-green-200",
+                      annulee: "bg-red-50 text-red-700 border-red-200",
+                      terminee: "bg-slate-100 text-slate-700 border-slate-200",
+                    }
+                    const badgeClass = badgeColors[r.statut] || "bg-muted text-muted-foreground border-border"
+                    const statutLabel = r.statut === "en_attente" ? "En attente" : r.statut === "confirmee" ? "Confirmée" : r.statut === "annulee" ? "Annulée" : "Terminée"
+
+                    return (
+                      <div key={r.id} className="p-4 flex flex-col gap-3">
+                        <div className="flex items-center justify-between">
+                          <span className="font-semibold text-foreground">
+                            <ReservationDetailModal reservation={r} />
+                          </span>
+                          <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium ${badgeClass}`}>
+                            {statutLabel}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-3 bg-slate-50/50 p-2 rounded-lg border border-border/50">
+                          <img src={r.vehicle_image || "/cars/hero-car.svg"} alt="" className="h-10 w-16 rounded object-cover border shrink-0" />
+                          <div className="min-w-0 flex-1">
+                            <p className="text-xs text-muted-foreground font-medium">Véhicule</p>
+                            <p className="text-sm font-medium text-foreground truncate">{r.brand} {r.model}</p>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col gap-1 text-xs text-muted-foreground">
+                          <p>
+                            <span className="font-medium text-foreground">Service :</span>{" "}
+                            <span className={`inline-flex rounded px-1.5 py-0.2 text-[10px] font-semibold uppercase ${
+                              r.service_type === "location" ? "bg-blue-50 text-blue-700 border border-blue-100" : "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                            }`}>
+                              {r.service_type === "location" ? "Location" : "Vente"}
+                            </span>
+                          </p>
+                          {(r.date_debut || r.date_fin) && (
+                            <p>
+                              <span className="font-medium text-foreground">Dates :</span> du {new Date(r.date_debut).toLocaleDateString("fr-FR")} au {new Date(r.date_fin).toLocaleDateString("fr-FR")}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="flex justify-end border-t border-border/50 pt-2.5">
+                          <AdminActions type="reservation" id={r.id} currentStatus={r.statut} />
+                        </div>
+                      </div>
+                    )
+                  })}
+                  {reservations.length === 0 && (
+                    <p className="p-4 text-center text-muted-foreground text-sm">Aucune commande.</p>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -429,7 +519,8 @@ export default async function EspaceAdminPage({
                     {clients.length} client(s)
                   </span>
                 </div>
-                <div className="overflow-x-auto">
+                {/* Desktop view */}
+                <div className="hidden md:block overflow-x-auto">
                   <table className="w-full min-w-[700px] text-sm">
                     <thead className="bg-slate-50/30 text-left text-xs uppercase tracking-wider text-muted-foreground border-b border-border">
                       <tr>
@@ -462,6 +553,31 @@ export default async function EspaceAdminPage({
                       )}
                     </tbody>
                   </table>
+                </div>
+
+                {/* Mobile view */}
+                <div className="block md:hidden divide-y divide-border">
+                  {clients.map((c) => {
+                    const fullName = [c.first_name, c.last_name].filter(Boolean).join(" ") || "—"
+                    return (
+                      <div key={c.id} className="p-4 flex flex-col gap-2 text-sm">
+                        <div className="flex items-center justify-between">
+                          <span className="font-semibold text-foreground">{fullName}</span>
+                          <span className="text-xs text-muted-foreground">
+                            Inscrit le {c.created_at ? new Date(c.created_at).toLocaleDateString("fr-FR") : "—"}
+                          </span>
+                        </div>
+                        <div className="space-y-1 text-xs text-muted-foreground">
+                          <p><span className="font-medium text-foreground">Email :</span> {c.email}</p>
+                          <p><span className="font-medium text-foreground">Téléphone :</span> {c.phone || "—"}</p>
+                          <p><span className="font-medium text-foreground">Adresse :</span> {c.address || "—"}</p>
+                        </div>
+                      </div>
+                    )
+                  })}
+                  {clients.length === 0 && (
+                    <p className="p-4 text-center text-muted-foreground text-sm">Aucun client inscrit.</p>
+                  )}
                 </div>
               </div>
             </div>
